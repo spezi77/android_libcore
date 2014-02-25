@@ -133,14 +133,26 @@ public class Zygote {
     public static int forkAndSpecialize(int uid, int gid, int[] gids, int debugFlags,
           int[][] rlimits, int mountExternal, String seInfo, String niceName, int[] fdsToClose) {
         preFork();
-        int pid = nativeForkAndSpecialize(
+        int pid = nativeForkAndSpecialize_new(
                   uid, gid, gids, debugFlags, rlimits, mountExternal, seInfo, niceName, fdsToClose);
         postFork();
         return pid;
     }
 
-    native public static int nativeForkAndSpecialize(int uid, int gid, int[] gids, int debugFlags,
+    public static int forkAndSpecialize(int uid, int gid, int[] gids, int debugFlags,
+          int[][] rlimits, int mountExternal, String seInfo, String niceName) {
+        preFork();
+        int pid = nativeForkAndSpecialize(
+                  uid, gid, gids, debugFlags, rlimits, mountExternal, seInfo, niceName);
+        postFork();
+        return pid;
+    }
+
+    native public static int nativeForkAndSpecialize_new(int uid, int gid, int[] gids, int debugFlags,
           int[][] rlimits, int mountExternal, String seInfo, String niceName, int[] fdsToClose);
+
+    native public static int nativeForkAndSpecialize(int uid, int gid, int[] gids, int debugFlags,
+          int[][] rlimits, int mountExternal, String seInfo, String niceName);
 
     /**
      * Special method to start the system server process. In addition to the
