@@ -176,18 +176,8 @@ public final class System {
         }
         if (length <= ARRAYCOPY_SHORT_CHAR_ARRAY_THRESHOLD) {
             // Copy char by char for shorter arrays.
-            if (src == dst && srcPos < dstPos && dstPos < srcPos + length) {
-                // Copy backward (to avoid overwriting elements before
-                // they are copied in case of an overlap on the same
-                // array.)
-                for (int i = length - 1; i >= 0; --i) {
-                    dst[dstPos + i] = src[srcPos + i];
-                }
-            } else {
-                // Copy forward.
-                for (int i = 0; i < length; ++i) {
-                    dst[dstPos + i] = src[srcPos + i];
-                }
+            for (int i = 0; i < length; ++i) {
+              dst[dstPos + i] = src[srcPos + i];
             }
         } else {
             // Call the native version for longer arrays.
